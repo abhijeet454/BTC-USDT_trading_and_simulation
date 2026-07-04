@@ -104,3 +104,6 @@ env/
 
 # Frontend dependencies (nested install)
 frontend/node_modules/
+
+# Data files
+*.csv
