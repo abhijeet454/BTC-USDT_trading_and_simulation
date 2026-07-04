@@ -1,60 +1,58 @@
+# InstiTrade: Institutional Algorithmic Trading Platform
 
-<h1>BTC/USDT Trading Model</h1>
+InstiTrade is a highly advanced, full-stack machine learning application built for forecasting algorithmic trading targets (Close, High, Low, Volume). It features a Python multi-output LSTM model, a fast FastAPI backend, and a classic SaaS-styled React dashboard.
 
-<h2>Introduction</h2>
-<p>This project implements a deep learning model to predict Bitcoin (BTC) prices against Tether (USDT) and make trading decisions based on the predictions. The model utilizes Long Short-Term Memory (LSTM) neural networks to capture the temporal dependencies in the cryptocurrency price data. The primary goal is to forecast price changes and simulate trading strategies to evaluate potential profitability.</p>
+## System Architecture
 
-<h2>Features</h2>
-<ul>
-<li><strong>LSTM Neural Network:</strong> The model is built using an LSTM architecture to effectively learn from sequential data.</li>
-<li><strong>Data Preprocessing:</strong> Includes feature engineering, normalization, and data splitting for training and testing.</li>
-<li><strong>Model Training:</strong> Trains the model on historical BTC/USDT price data.</li>
-<li><strong>Backtesting:</strong> Simulates trading strategies using the model's predictions, providing insights into potential profits.</li>
-<li><strong>Visualization:</strong> Plots model accuracy, loss, predicted vs. actual price changes, and trading signals.</li>
-</ul>
+1. **Machine Learning Model (`/ml_model`)**: A multi-output LSTM model that analyzes sequences (60 hours) of historical BTC-USDT data to predict 4 key parameters for the next timestep simultaneously.
+2. **Backend API (`/backend`)**: A highly performant FastAPI server that serves the live predictions to the dashboard.
+3. **Frontend Dashboard (`/frontend`)**: A React + Vite application styled with a clean, classic SaaS theme to monitor live model execution.
 
-<h2>Data Requirements</h2>
-<p>The model requires historical BTC/USDT price data in CSV format with the following columns:</p>
-<ul>
-<li><code>datetime</code>: The date and time of the price record.</li>
-<li><code>open</code>: The opening price.</li>
-<li><code>high</code>: The highest price.</li>
-<li><code>low</code>: The lowest price.</li>
-<li><code>close</code>: The closing price.</li>
-<li><code>volume</code>: The traded volume.</li>
-</ul>
+## Installation & Setup
 
-<h2>Installation</h2>
-<p>To set up the environment and run the notebook:</p>
-<ol>
-<li>Clone the repository:
-<pre><code>git clone https://github.com/yourusername/btc-usdt-trading-model.git
-cd btc-usdt-trading-model
-</code></pre></li>
-<li>Install the required packages:
-<pre><code>pip install -r requirements.txt
-</code></pre></li>
-<li>Ensure you have the required data in CSV format and update the file path in the notebook.</li>
-</ol>
-
-<h2>Usage</h2>
-<ol>
-<li><strong>Load and Preprocess Data:</strong> Use the provided function to load and preprocess your BTC/USDT data.</li>
-<li><strong>Build and Train the Model:</strong> The model is built using an LSTM architecture and trained on the historical data.</li>
-<li><strong>Evaluate the Model:</strong> Evaluate the model's performance on test data to get accuracy and loss metrics.</li>
-<li><strong>Backtest the Strategy:</strong> Run the backtesting function to simulate trades based on model predictions.</li>
-<li><strong>Visualize Results:</strong> Use the plotting functions to visualize the training process, trading signals, and model predictions.</li>
-</ol>
-
-<h2>Results</h2>
-<p>The notebook provides an in-depth analysis of the model's performance, including:</p>
-<ul>
-<li>Model accuracy and loss during training and testing.</li>
-<li>Visualization of predicted vs. actual price changes.</li>
-<li>Backtesting results showing potential profitability.</li>
-</ul>
-
-<h2>Contributing</h2>
-<p>Contributions are welcome! .</p>
+### 1. Train the Model
+You must first train the model so it can generate the `best_model.keras` weights file.
+1. Navigate to the `ml_model` directory:
+   ```bash
+   cd ml_model
+   ```
+2. Run the training script:
+   ```bash
+   python train.py
+   ```
+3. Ensure `btc_1h.csv` is present in the directory before running.
 
 
+### 2. Start the Backend Server
+The FastAPI backend requires Python dependencies.
+1. Open a terminal and navigate to the `backend` folder:
+   ```bash
+   cd backend
+   ```
+2. Install the requirements:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Start the server:
+   ```bash
+   uvicorn app:app --host 0.0.0.0 --port 8000 --reload
+   ```
+   *The backend will now be running on http://localhost:8000*
+
+### 3. Start the Frontend Dashboard
+1. Open a **new** terminal and navigate to the `frontend` folder:
+   ```bash
+   cd frontend
+   ```
+2. Install the Node dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the Vite development server:
+   ```bash
+   npm run dev
+   ```
+   *The dashboard will now be running on http://localhost:5173*
+
+## Usage
+Once both servers are running, navigate to http://localhost:5173 in your browser. The React dashboard will automatically fetch prediction data from the FastAPI backend and render the charts!
