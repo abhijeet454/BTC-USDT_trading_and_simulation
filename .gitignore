@@ -102,7 +102,5 @@ env/
 .env/
 .venv/
 
-# Node
-node_modules/
+# Frontend dependencies (nested install)
 frontend/node_modules/
-__pycache__/
